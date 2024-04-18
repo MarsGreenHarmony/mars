@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+    <!-- Appenders -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d %5p [%c] %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="console-infolog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d %5p %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger -->
+    <logger name="kr.co.himedia.sn.ecommerce5th.mars" level="info" appender-ref="console" />
+    <logger name="org.springframework" level="warn" appender-ref="console-infolog" />
+    <logger name="java.sql" level="warn" appender-ref="console-infolog" />
+    <logger name="org.apache.mybatis" level="warn" appender-ref="console-infolog" />
+    <logger name="jdbc.sqlonly" level="warn" appender-ref="console-infolog" />
+    <logger name="jdbc.resultsettable" level="warn" appender-ref="console-infolog" />
+
+    <!-- Root Logger -->
+    <root level="info">
+        <appender-ref ref="console" />
+    </root>
+</configuration>

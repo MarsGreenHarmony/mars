@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.front.buy.mapper.BuyMapper">
+	
+	<select id="mainList" resultType="SaleDto" parameterType="SaleDto">
+	SELECT A.SEQ_SEL, A.SEQ_PRD, A.SEL_NM, A.PRICE, (SELECT
+		CORP_NM FROM SELLER S
+		WHERE S.SEQ_SLL = A.REGISTER) AS CORP_NM, B.PRD_IMG,
+		B.PRD_PATH , A.CATEGORY1, A.CATEGORY2,
+		B.TN_STATE, <include refid="rnum2"></include>
+	FROM SELL A
+	INNER JOIN PRD_IMG B
+		ON A.SEQ_PRD = B.SEQ_PRD
+	where A.SEQ_SEL > 0 AND B.TN_STATE = 'S' AND A.SEL_STATE = 1 <if test="detail == 'yes'">AND CATEGORY1 = #{category1} AND CATEGORY2 = #{category2} </if>
+	</select>
+	
+	<sql id="rnum2">
+		<!-- 키워드가 비어 있지 않은 경우 --> 
+		<choose>
+			<when test="main == null or main == ''">
+				ROW_NUMBER() OVER (ORDER BY A.SEL_CNT ASC) AS rnum
+			</when>
+			<when test="main == 'popular'.toString()">
+				ROW_NUMBER() OVER (ORDER BY A.SEL_CNT DESC) AS rnum
+			</when>
+			<when test="main == 'new'.toString()">
+				ROW_NUMBER() OVER (ORDER BY A.DT_REG DESC) AS rnum
+			</when>
+			<when test="main == 'random'.toString()">
+				ROW_NUMBER() OVER (ORDER BY DBMS_RANDOM.VALUE) AS rnum
+			</when>
+		</choose>
+	</sql>
+	
+	
+	
+	<select id="selectMstWithDetails" resultType="BuyMstDto" parameterType="BuyMstDto">
+        SELECT
+            m.SEQ_MST,
+            m.SEQ_CST,
+            m.BUY_INFO,
+            m.BUY_T_COUNT,
+            m.BUY_T_PRICE,
+            m.CD_STATE_DEL,
+            m.CD_STATE_PAY,
+            m.CD_STATE_DELIVERY,
+            TO_CHAR(m.DT_REG, 'YYYY-MM-DD') DT_REG,
+            m.DT_UPT,
+            m.ADDRESS,
+            m.POSTCODE,
+            d.SEQ_DTL,
+            d.SEQ_PRD,
+            d.SEQ_SEL,
+            d.PRICE,
+            d.COUNT,
+            d.DT_REG AS DETAIL_DT_REG,
+            d.DETAIL_IMG,
+            d.BUY_PRD_NM,
+            d.REGISTER,
+            (SELECT seller.corp_nm 
+		     FROM SELL sell 
+		     INNER JOIN SELLER seller ON sell.register = seller.SEQ_SLL 
+		     WHERE sell.seq_sel = d.seq_sel)
+		     AS corp_nm
+        FROM BUY_MST m
+        JOIN BUY_DTL d ON m.SEQ_MST = d.SEQ_MST
+        WHERE m.SEQ_CST = #{seqCst}
+        ORDER BY DT_REG DESC
+    </select>
+	
+	
+	<select id="count">
+	SELECT COUNT(*) AS dtl_count
+	FROM BUY_MST
+	JOIN BUY_DTL ON BUY_MST.seq_mst = BUY_DTL.seq_mst
+	WHERE BUY_MST.seq_mst = #{seq_mst}
+	</select>
+	
+	<select id="selectMst" parameterType="BuyMstDto" resultType="BuyMstDto">
+	SELECT
+		SEQ_MST, SEQ_CST, BUY_INFO, BUY_T_COUNT, BUY_T_PRICE, CD_STATE_DEL, CD_STATE_PAY, CD_STATE_DELIVERY, TO_CHAR(DT_REG, 'YYYY-MM-DD') DT_REG, DT_UPT,
+		ADDRESS, POSTCODE
+	FROM
+		BUY_MST
+	WHERE
+		SEQ_CST = #{seq_cst}
+	 ORDER BY DT_REG DESC
+	</select>
+	
+	<select id="selectDtl" parameterType="BuyDtlDto" resultType="BuyDtlDto">
+	SELECT 
+	    dtl.SEQ_DTL, 
+	    dtl.SEQ_MST, 
+	    dtl.SEQ_PRD, 
+	    dtl.SEQ_SEL, 
+	    dtl.PRICE, 
+	    dtl.COUNT, 
+	    dtl.DT_REG, 
+	    dtl.DETAIL_IMG, 
+	    dtl.BUY_PRD_NM, 
+	    dtl.REGISTER, 
+	    dtl.CD_STATE_DELIVERY,
+	    (SELECT seller.corp_nm 
+	     FROM SELL sell 
+	     INNER JOIN SELLER seller ON sell.register = seller.SEQ_SLL 
+	     WHERE sell.seq_sel = dtl.seq_sel)
+	     AS corp_nm
+	FROM 
+    	BUY_DTL dtl
+	WHERE
+		REGISTER = #{register} AND SEQ_MST = #{seq_mst}
+	 ORDER BY dtl.DT_REG DESC
+	</select>
+	
+	
+	<update id="update" parameterType="BuyMstDto">
+		UPDATE
+			BUY_MST
+		SET
+			CD_STATE_PAY	= #{cd_state_pay}
+			, DT_UPT		= SYSDATE
+			, UPDATER		= #{updater}
+		WHERE
+			SEQ_MST 	= #{seq_mst}
+	</update>
+	
+	
+	
+	<insert id="insertMst" parameterType="BuyMstDto">
+		INSERT INTO BUY_MST
+			(SEQ_MST, SEQ_CST, BUY_INFO, BUY_T_COUNT, BUY_T_PRICE, CD_STATE_DEL, CD_STATE_PAY, CD_STATE_DELIVERY, DT_REG, REGISTER, ADDRESS, POSTCODE)
+		VALUES	
+			(#{seq_mst}, #{seq_cst}, #{buy_info}, #{buy_t_count}, #{buy_t_price}, 'N', 'N', 'P', SYSDATE, #{register}, #{address}, #{postcode} )
+	</insert>
+	
+	<select id="sequenceMst" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_MST.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="insertDtl" parameterType="BuyDtlDto">
+		INSERT INTO BUY_DTL
+			(SEQ_DTL, SEQ_MST, SEQ_PRD, SEQ_SEL, PRICE, COUNT, DT_REG, REGISTER, DETAIL_IMG, BUY_PRD_NM, CD_STATE_DELIVERY, CD_STATE_CCL)
+		VALUES
+			(#{seq_dtl}, #{seq_mst}, #{seq_prd}, #{seq_sel}, #{price}, #{count}, SYSDATE, #{register}, #{detail_img}, #{buy_prd_nm}, 'N', 2)
+	</insert>
+	
+	<select id="sequenceDtl" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_DTL.NEXTVAL FROM DUAL
+	</select>
+	
+	
+	<!-- ============================================================================================ -->
+
+	<select id="productSelect" parameterType="SaleDto"
+		resultType="SaleDto">
+		SELECT
+		A.SEQ_SEL,
+		A.SEQ_PRD,
+		A.SEL_NM,
+		A.PRICE,
+		A.CATEGORY1,
+		A.CATEGORY2,
+		A.SEL_STATE,
+		S.CORP_NM
+		FROM
+		SELL A
+		INNER JOIN SELLER S ON A.REGISTER = S.SEQ_SLL
+		WHERE
+		A.SEQ_SEL = #{seq_sel}
+	</select>
+	
+	<select id="descSelect" parameterType="DescDto" resultType="DescDto">
+	SELECT
+		NAME ,SPEC, DT_USE, USE, COMPANY, COUNTRY, ELEMENT, SAFETY, CAUTION, DT_QLT, TEL
+	FROM
+		SEL_DESC
+	WHERE SEQ_SEL = #{seq_sel}
+	
+	</select>
+
+	<select id="prdImgSelect" parameterType="SaleDto"
+		resultType="SaleDto">
+		SELECT
+		SEQ_PRD_IMG,
+		SEQ_PRD,
+		PRD_IMG,
+		PRD_PATH,
+		TN_STATE
+		FROM
+		PRD_IMG
+		WHERE
+		SEQ_PRD = #{seq_prd}
+		ORDER BY
+		SEQ_PRD_IMG
+	</select>
+
+	<select id="selImgSelect" parameterType="SaleDto"
+		resultType="SaleDto">
+		select
+		seq_sel_img,
+		seq_sel,
+		sel_img,
+		sel_path
+		from
+		sel_img
+		where
+		seq_sel = #{seq_sel}
+
+	</select>
+
+	<select id="productList" parameterType="SaleDto"
+		resultType="SaleDto">
+		SELECT * FROM (
+       	SELECT A.SEQ_SEL, A.SEQ_PRD, A.SEL_NM, A.PRICE, (SELECT
+		CORP_NM FROM SELLER S
+		WHERE S.SEQ_SLL = A.REGISTER) AS CORP_NM, B.PRD_IMG,
+		B.PRD_PATH , A.CATEGORY1, A.CATEGORY2,
+		B.TN_STATE, <include refid="rnum"></include>
+		FROM SELL A
+		INNER JOIN PRD_IMG B
+		ON A.SEQ_PRD = B.SEQ_PRD
+		where A.SEQ_SEL > 0 AND B.TN_STATE = 'S'
+		AND A.CATEGORY1 = #{category1} AND A.SEL_STATE = 1
+		<include refid="search"></include>
+		)
+		WHERE rnum BETWEEN #{sno} AND #{eno}
+	</select>
+	
+	
+	
+	<sql id="rnum">
+		<!-- 키워드가 비어 있지 않은 경우 -->
+		<choose>
+			<when test="searchRnum == null or searchRnum == ''">
+				ROW_NUMBER() OVER (ORDER BY A.DT_REG DESC) AS rnum
+			</when>
+			<when test="searchRnum == 'priceUp'.toString()">
+				ROW_NUMBER() OVER (ORDER BY A.PRICE DESC) AS rnum
+			</when>
+			<when test="searchRnum == 'priceDown'.toString()">
+				ROW_NUMBER() OVER (ORDER BY A.PRICE ASC) AS rnum
+			</when>
+			<when test="searchRnum == 'popular'.toString()">
+				ROW_NUMBER() OVER (ORDER BY A.SEL_CNT DESC) AS rnum
+			</when>
+			<when test="searchRnum == 'new'.toString()">
+				ROW_NUMBER() OVER (ORDER BY A.DT_REG DESC) AS rnum
+			</when>
+		</choose>
+	</sql>
+	
+	<sql id="search">
+		<!-- 키워드가 비어 있지 않은 경우 -->
+		<choose>
+			<when test="searchType == 'sel_nm'.toString()">
+				and sel_nm LIKE '%' || #{keyword} || '%'
+			</when>
+		</choose>
+	</sql>
+
+	<select id="searchCount" resultType="int">
+		select count(*)
+		from SELL
+		where ( SEQ_SEL > 0) AND category1 = #{category1} AND SEL_STATE = 1
+		<include refid="search"></include>
+	</select>
+	
+	<update id="updateCnt">
+		UPDATE
+		    SELL
+		SET
+		    sel_cnt = sel_cnt + 1
+		WHERE 
+		    SEQ_SEL = #{seq_sel}
+	</update>
+	
+
+</mapper>

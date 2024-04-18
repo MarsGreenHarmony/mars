@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.seller.product.mapper.ProductMapper">
+
+	<select id="listing" parameterType="ProductDto"
+		resultType="ProductDto">
+		SELECT
+		SEQ_PRD
+		, PRD_NM
+		FROM
+		PRODUCT
+		WHERE
+		PRD_STATE = 1
+		AND REGISTER = #{register}
+		ORDER BY
+		DT_REG DESC
+	</select>
+
+	<insert id="insertProduct" parameterType="ProductDto">
+		INSERT INTO PRODUCT
+		(SEQ_PRD, PRD_NM, COST, COUNT, PRD_STATE, DT_REG, REGISTER)
+		VALUES
+		(#{seq_prd}, #{prd_nm}, #{cost}, #{count}, 1, SYSDATE, #{register})
+
+	</insert>
+
+	<insert id="insertImg" parameterType="ProductDto">
+		INSERT INTO PRD_IMG
+		(SEQ_PRD_IMG, SEQ_PRD, PRD_IMG, PRD_PATH, TN_STATE)
+		VALUES
+		(#{seq_prd_img},#{seq_prd},#{prd_img}, '/seller/product/image', #{tn_state})
+	</insert>
+
+	<select id="sequencePrd" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_PRD.NEXTVAL
+		FROM DUAL
+	</select>
+
+	<select id="sequenceImg" resultType="java.lang.Integer">
+		SELECT
+		SQ_SEQ_PRD_IMG.NEXTVAL
+		FROM DUAL
+	</select>
+
+	<!-- ====================================================================================================================== -->
+	
+
+	<sql id="search">
+		<!-- 키워드가 비어 있지 않은 경우 -->
+		<choose>
+		<!-- 	검색 타입이 't' (제목)인 경우 -->
+			<when test="searchType == 'name'.toString()">
+				and prd_nm LIKE '%' || #{keyword} || '%'
+			</when>
+			<!-- 검색 타입이 'c' (내용)인 경우 -->
+			<when test="searchType == 'cate1'.toString()">
+				and category1 LIKE '%' || #{keyword} || '%'
+			</when>
+			<!-- 검색 타입이 'i' (작성자)인 경우 -->
+			<when test="searchType == 'cate2'.toString()">
+				and category2 LIKE '%' || #{keyword} || '%'
+			</when>
+			<!-- 검색 타입이 'tc' (제목 또는 내용)인 경우 -->
+			<when test="searchType == 'tc'.toString()"> and (title LIKE #{keyVal} 
+				OR content LIKE #{keyVal}) </when> 
+				 <!-- 검색 타입이 'tci' (제목, 내용, 작성자)인 경우 -->
+				  <when test="searchType == 'tci'.toString()"> and (title LIKE #{keyVal} OR content LIKE #{keyVal} OR id LIKE #{keyVal})</when>
+		</choose>
+	</sql>
+
+
+	<select id="searchList" resultType="ProductDto">
+		SELECT * FROM (
+		    SELECT A.SEQ_PRD, A.PRD_NM, A.COST, A.COUNT, A.PRD_STATE, B.PRD_IMG,
+		    B.PRD_PATH, B.TN_STATE, TO_CHAR(A.DT_REG, 'YYYY-MM-DD') DT_REG,
+		    ROW_NUMBER() OVER (ORDER BY A.DT_REG DESC) AS rnum
+		    FROM PRODUCT A
+		    JOIN PRD_IMG B ON A.SEQ_PRD = B.SEQ_PRD
+		    WHERE A.SEQ_PRD > 0 AND A.REGISTER = #{register} AND B.TN_STATE = 'S' AND A.PRD_STATE = 1
+		    <include refid="search"></include>
+		)
+		WHERE rnum BETWEEN #{sno} AND #{eno}
+	</select>
+
+	<select id="searchCount" resultType="int">
+		select count(*)
+		from PRODUCT
+		where ( SEQ_PRD > 0) and REGISTER = #{register} and PRD_STATE = 1
+		<include refid="search"></include>
+	</select>
+
+	<select id="select" parameterType="ProductDto"
+		resultType="ProductDto">
+		SELECT
+			SEQ_PRD
+			, PRD_NM
+			, COST
+			, COUNT
+			, TO_CHAR(DT_REG, 'YYYY-MM-DD HH24:MI:SS') dt_reg
+			, TO_CHAR(DT_UPT, 'YYYY-MM-DD HH24:MI:SS') dt_upt
+		FROM
+			PRODUCT
+		WHERE
+			SEQ_PRD = #{seq_prd}
+	</select>
+
+	<update id="update" parameterType="ProductDto">
+		UPDATE
+			PRODUCT
+		SET
+			PRD_NM = #{prd_nm}
+			, COST = #{cost}
+			, COUNT = #{count}
+			, DT_UPT = SYSDATE
+		WHERE
+			SEQ_PRD = #{seq_prd}
+	</update>
+	
+
+	<update id="delete" parameterType="ProductDto">
+		UPDATE
+			PRODUCT
+		SET
+			PRD_STATE = 2
+		WHERE
+			SEQ_PRD = #{seq_prd}
+	</update>
+
+	<select id="selectImg" parameterType="ProductDto" resultType="ProductDto">
+		SELECT 
+			SEQ_PRD_IMG, PRD_IMG, PRD_PATH, SEQ_PRD, TN_STATE
+		FROM 
+			PRD_IMG
+		WHERE 
+			SEQ_PRD = #{seq_prd}
+	</select>
+
+</mapper>

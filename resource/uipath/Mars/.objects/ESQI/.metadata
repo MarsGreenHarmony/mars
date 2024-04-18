@@ -1,0 +1,12 @@
+﻿{
+  "Name": "Chrome: mars.sn.himedia.co.kr:8082/seller/main/main",
+  "Type": "App",
+  "Id": "ESQIhFZjtk-I4SepFdTP0A",
+  "Reference": "HydC3rRrRU2FaCfcQrqMKQ/ESQIhFZjtk-I4SepFdTP0A",
+  "Created": "2024-04-12T01:15:12.5224781Z",
+  "Updated": "2024-04-12T01:15:12.5224781Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=23.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=23.10.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

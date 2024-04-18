@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.backoffice.member.mapper.MemberMapper">
+
+	<select id="frontmember" resultType="CustomerDto">
+		SELECT
+			SEQ_CST, ID, PASSWD, CST_NM, PHONE, CST_EMAIL, FLG_EMAIL, SEQ_STATE, TO_CHAR(DT_REG, 'YYYY-MM-DD HH24:MI:SS') dt_reg
+		FROM
+			CUSTOMER
+		ORDER BY SEQ_CST ASC
+
+	</select>
+	
+	<select id="sellermember" resultType="SellerDto">
+		SELECT
+			SEQ_SLL, ID, CORP_NM, CEO, TC_STATE, TO_CHAR(DT_REG, 'YYYY-MM-DD HH24:MI:SS') dt_reg
+		FROM	
+			SELLER
+		ORDER BY SEQ_SLL ASC
+	</select>
+</mapper>
+	

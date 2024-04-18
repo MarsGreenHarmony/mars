@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.seller.order.mapper.OrderMapper">
+	
+	<select id="select" parameterType="BuyDtlDto" resultType="BuyDtlDto">
+	select to_char(dt_reg, 'mm') as dt_reg
+	, sum(price*count) as price from buy_dtl where to_char(dt_reg, 'yyyy') = #{start} group by to_char(dt_reg, 'mm')
+	</select>
+	
+	
+	<select id="revenueList" parameterType="BuyDtlDto" resultType="BuyDtlDto">
+		select * from BUY_DTL BD
+		INNER JOIN 
+	    	SELL SEL ON BD.SEQ_SEL = SEL.SEQ_SEL    
+		INNER JOIN 
+		     SELLER SLL ON SLL.SEQ_SLL = SEL.REGISTER
+		where SLL.seq_sll = #{seq_sll}
+		AND BD.dt_reg BETWEEN TO_DATE(#{start}, 'YYYY') AND TO_DATE(#{end}, 'YYYY')
+	</select>
+	
+	<select id="calList" parameterType="BuyDtlDto">
+		SELECT * FROM (
+		    SELECT BD.SEQ_DTL, BD.SEQ_MST, BD.SEQ_PRD, BD.SEQ_SEL, BD.PRICE, BD.COUNT,
+		    BD.DETAIL_IMG, BD.BUY_PRD_NM, TO_CHAR(BD.DT_REG, 'YYYY-MM-DD') DT_REG,
+		    BD.REGISTER, BD.CD_STATE_DELIVERY,  CASE
+        WHEN BD.CD_STATE_CCL = 1 THEN '정산완료'
+        WHEN BD.CD_STATE_CCL = 2 THEN '정산전'
+        WHEN BD.CD_STATE_CCL = 3 THEN '정산거부'
+        ELSE BD.CD_STATE_CCL
+    END AS CD_STATE_CCL,
+		    ROW_NUMBER() OVER (ORDER BY BD.DT_REG DESC) AS rnum
+		    FROM BUY_DTL BD
+		    INNER JOIN 
+		    	SELL SEL ON BD.SEQ_SEL = SEL.SEQ_SEL    
+			INNER JOIN 
+			     SELLER SLL ON SLL.SEQ_SLL = SEL.REGISTER
+		    WHERE SEQ_DTL > 0 AND SLL.seq_sll =#{seq_sll}
+		)
+		WHERE rnum BETWEEN #{sno} AND #{eno}
+	</select>
+	
+	<select id="calCount" resultType="int">
+		select count(*)
+		from BUY_DTL BD
+		INNER JOIN 
+		    	SELL SEL ON BD.SEQ_SEL = SEL.SEQ_SEL    
+			INNER JOIN 
+			     SELLER SLL ON SLL.SEQ_SLL = SEL.REGISTER
+		where ( BD.SEQ_DTL > 0) and SLL.seq_sll =#{seq_sll}
+	</select>
+	
+	
+	<select id="searchList" resultType="OrderDto" parameterType="OrderDto">
+	
+		SELECT 
+		    BD.SEQ_DTL, 
+		    BD.SEQ_MST, 
+		    BD.SEQ_PRD, 
+		    BD.SEQ_SEL, 
+		    BD.PRICE, 
+		    BD.COUNT, 
+		    TO_CHAR(BD.DT_REG, 'YYYY-MM-DD') AS DT_REG, 
+		    BD.DETAIL_IMG, 
+		    BD.BUY_PRD_NM, 
+		    BD.REGISTER,
+        	CASE NVL(BD.CD_STATE_DELIVERY, 'N')
+            WHEN 'N' THEN '배송전'
+            WHEN 'C' THEN '배송중'
+            WHEN 'Y' THEN '배송완료'
+       		END AS CD_STATE_DELIVERY,
+		    CST.CST_NM AS CST_NM,
+		   CASE MST.CD_STATE_PAY
+        	WHEN 'N' THEN '결제취소'
+        	WHEN 'Y' THEN '결제완료'
+   		  END AS CD_STATE_PAY
+		FROM 
+		    BUY_DTL BD
+		    
+		INNER JOIN 
+		    SELL SEL ON BD.SEQ_SEL = SEL.SEQ_SEL    
+		INNER JOIN 
+		    CUSTOMER CST ON BD.REGISTER = CST.SEQ_CST
+		INNER JOIN 
+		     SELLER SLL ON SLL.SEQ_SLL = SEL.REGISTER
+		INNER JOIN 
+   			 BUY_MST MST ON BD.SEQ_MST = MST.SEQ_MST      
+		     
+		WHERE SLL.seq_sll =#{seq_sll}
+	
+		ORDER BY 
+    		BD.DT_REG DESC
+	
+	</select>
+	
+	<update id="update" parameterType="OrderDto">
+		UPDATE
+			BUY_DTL
+		SET
+			CD_STATE_DELIVERY =#{cd_state_delivery}
+		WHERE
+			SEQ_DTL = #{seq_dtl}
+	</update>
+	
+	<sql id="search">
+		<!-- 키워드가 비어 있지 않은 경우 -->
+		<choose>
+		<!-- 	검색 타입이 't' (제목)인 경우 -->
+			<when test="searchType == 'name'.toString()">
+				and prd_nm LIKE '%' || #{keyword} || '%'
+			</when>
+			<!-- 검색 타입이 'c' (내용)인 경우 -->
+			<when test="searchType == 'cate1'.toString()">
+				and category1 LIKE '%' || #{keyword} || '%'
+			</when>
+			<!-- 검색 타입이 'i' (작성자)인 경우 -->
+			<when test="searchType == 'cate2'.toString()">
+				and category2 LIKE '%' || #{keyword} || '%'
+			</when>
+			<!-- 검색 타입이 'tc' (제목 또는 내용)인 경우 -->
+			<when test="searchType == 'tc'.toString()"> and (title LIKE #{keyVal} 
+				OR content LIKE #{keyVal}) </when> 
+				 <!-- 검색 타입이 'tci' (제목, 내용, 작성자)인 경우 -->
+				  <when test="searchType == 'tci'.toString()"> and (title LIKE #{keyVal} OR content LIKE #{keyVal} OR id LIKE #{keyVal})</when>
+		</choose>
+	</sql>
+		
+	</mapper>

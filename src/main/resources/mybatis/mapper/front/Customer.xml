@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.front.customer.mapper.CustomerMapper">
+
+	<insert id="insert" parameterType="CustomerDto">
+		INSERT INTO CUSTOMER
+			(SEQ_CST, ID, PASSWD, CST_NM, SEQ_STATE, PHONE, CST_EMAIL, DT_REG, FLG_EMAIL, DT_EMAIL)
+		VALUES
+			(#{seq_cst}, #{id}, #{passwd}, #{cst_nm}, 'N', #{phone}, #{cst_email}, SYSDATE, #{flg_email}, SYSDATE)
+	</insert>
+	
+	
+	<select id="sequence" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_CST.NEXTVAL FROM DUAL
+	</select>
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT COUNT(id) FROM CUSTOMER WHERE id= #{id}
+	</select>
+	
+	<select id="select" resultType="CustomerDto" parameterType="CustomerDto">
+		SELECT
+			SEQ_CST, ID, PASSWD, CST_NM, PHONE, CST_EMAIL, FLG_EMAIL, SEQ_STATE
+		FROM
+			CUSTOMER
+		WHERE
+			SEQ_CST = #{seq_cst}
+	</select>
+	
+	<update id="update" parameterType="CustomerDto">
+		UPDATE
+			CUSTOMER
+		SET
+			PHONE			= #{phone}
+			, CST_EMAIL		= #{cst_email}
+			, DT_UPT		= SYSDATE
+			, UPDATER		= #{updater}
+			<if test="flg_email != before_flg_email">
+			, FLG_EMAIL		= #{flg_email}
+			, DT_EMAIL		= SYSDATE
+			</if>   
+		WHERE
+			SEQ_CST = #{seq_cst}
+	</update>
+	
+	<update id="deletecst" parameterType="CustomerDto">
+		UPDATE
+			CUSTOMER
+		SET
+			  SEQ_STATE = 'Y'
+			, DT_UPT = SYSDATE
+			, UPDATER = #{updater}
+		WHERE
+			SEQ_CST = #{seq_cst}
+	</update>
+	
+</mapper>

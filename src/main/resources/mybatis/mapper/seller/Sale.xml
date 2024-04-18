@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.seller.sale.mapper.SaleMapper">
+	<insert id="insertDesc" parameterType="DescDto">
+		INSERT INTO SEL_DESC
+		(SEQ_SEL, NAME ,SPEC, DT_USE, USE, COMPANY, COUNTRY, ELEMENT, SAFETY, CAUTION, DT_QLT, TEL)
+		VALUES
+		(#{seq_sel}, #{name}, #{spec}, #{dt_use}, #{use}, #{company}, #{country}, #{element}, #{safety}, #{caution}, #{dt_qlt}, #{tel})
+	</insert>
+
+	 <insert id="insertSale" parameterType="SaleDto">
+		INSERT INTO SELL
+		(SEQ_SEL, SEQ_PRD ,SEL_NM, CATEGORY1, CATEGORY2, PRICE,  SEL_STATE, DT_REG, REGISTER, SEL_CNT)
+		VALUES
+		(#{seq_sel}, #{seq_prd}, #{sel_nm}, #{category1}, #{category2}, #{price}, 0, SYSDATE, #{register}, 0)
+	</insert>
+
+	<insert id="insertImg" parameterType="SaleDto">
+		INSERT INTO SEL_IMG
+		(SEQ_SEL_IMG, SEQ_SEL, SEL_IMG, SEL_PATH)
+		VALUES
+		(#{seq_sel_img},#{seq_sel},#{sel_img}, '/seller/sale/image')
+	</insert>
+
+	<select id="sequenceSale" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_SEL.NEXTVAL
+		FROM DUAL
+	</select>
+
+	<select id="sequenceImg" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_SEL_IMG.NEXTVAL
+		FROM DUAL
+	</select>
+
+	<!-- ====================================================================================================================== -->
+
+
+	<sql id="search">
+		<!-- 키워드가 비어 있지 않은 경우 -->
+		<choose>
+			<when test="searchType == 'sel_nm'.toString()">
+				and sel_nm LIKE '%' || #{keyword} || '%'
+			</when>
+		</choose>
+	</sql>
+
+
+	<select id="searchList" resultType="SaleDto">
+		SELECT * FROM (
+        SELECT A.SEQ_SEL, A.SEL_NM, A.PRICE, A.SEL_STATE, A.REGISTER, B.PRD_IMG, B.PRD_PATH, B.TN_STATE, TO_CHAR(A.DT_REG, 'YYYY-MM-DD') DT_REG,
+               ROW_NUMBER() OVER (ORDER BY A.DT_REG DESC) AS rnum
+        FROM SELL A
+        JOIN PRD_IMG B ON A.SEQ_PRD = B.SEQ_PRD
+        WHERE A.SEQ_SEL > 0 AND A.REGISTER = #{register} AND B.TN_STATE = 'S'
+        <include refid="search"></include>
+    )
+    WHERE rnum BETWEEN #{sno} AND #{eno}
+
+	</select>
+
+	<select id="searchCount" resultType="int">
+		select count(*)
+		from SELL
+		where ( SEQ_SEL > 0) AND REGISTER = #{register}
+		<include refid="search"></include>
+	</select>
+	
+	<select id="select" parameterType="SaleDto" resultType="SaleDto">
+		SELECT
+			SEQ_SEL
+			, SEQ_PRD
+			, SEL_NM
+			, PRICE
+			, TO_CHAR(DT_REG, 'YYYY-MM-DD HH24:MI:SS') dt_reg
+			, TO_CHAR(DT_UPT, 'YYYY-MM-DD HH24:MI:SS') dt_upt
+		FROM
+			SELL
+		WHERE
+			SEQ_SEL = #{seq_sel}
+	</select>
+	
+	<update id="update" parameterType="SaleDto">
+		UPDATE
+			SELL
+		SET
+			SEL_NM			= #{sel_nm}
+			, PRICE			= #{price}
+			, CATEGORY1 = #{category1}
+			, CATEGORY2 = #{category2}
+			, DT_UPT		= SYSDATE
+		WHERE
+			SEQ_SEL = #{seq_sel}
+	</update>
+	
+	<update id="updateDesc" parameterType="DescDto">
+		UPDATE
+			SEL_DESC
+		SET
+			NAME		= #{name}
+			,SPEC		= #{spec}
+			, DT_USE	= #{dt_use}
+			, USE		= #{use}
+			, COMPANY	= #{company}
+			, COUNTRY	= #{country}
+			, ELEMENT	= #{element}
+			, SAFETY	= #{safety}
+			, CAUTION	= #{caution}
+			, DT_QLT	= #{dt_qlt}
+			, TEL		= #{tel}
+		WHERE
+			SEQ_SEL = #{seq_sel}
+	</update>
+	
+	<update id="delete" parameterType="SaleDto">
+		UPDATE
+			SELL
+		SET
+			SEL_STATE	=2
+		WHERE
+			SEQ_SEL = #{seq_sel}
+	</update>
+	
+
+</mapper>

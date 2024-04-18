@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryTargetData ContentHash="ybyXkIivn0uJS-39fHKJJQ" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryTargetData.Data>
+    <TargetAnchorable x:Key="TargetAnchorable" BrowserURL="http://mars.sn.himedia.co.kr:8082/seller/login/loginForm" CvTextArea="46, 402, 117, 16" CvTextArgument="&gt; 72/HH# 72]" CvType="Text" DesignTimeRectangle="46, 394, 182, 37" DesignTimeScaleFactor="1" ElementType="Text" FriendlyName="'주문/배송 관리'" FullSelectorArgument="&lt;webctrl parentid='ui-oder' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='ui-oder' tag='A' type='' class='nav-link' aaname='주문/배송 &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;관리' check:innerText='주문/배송 관리' /&gt;" Guid="51cb3bfb-e803-441a-bf5e-c7ab9712fe6a" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Connect Plus' /&gt;" SearchSteps="FuzzySelector, CV" Version="V2" Visibility="Interactive">
+      <imageRef attrName="InformativeScreenshot" originalValue="0f6b77a5d76b25289bc227e32c366dca.png" xmlns="">0ZjHlfPKN2EGOh-hAGXpVQg</imageRef>
+    </TargetAnchorable>
+  </ObjectRepositoryTargetData.Data>
+</ObjectRepositoryTargetData>

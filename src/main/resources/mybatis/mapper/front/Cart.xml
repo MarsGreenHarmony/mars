@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.front.cart.mapper.CartMapper">
+	
+	
+	<select id="findCartItem" parameterType="CartDto" resultType="CartDto">
+	    SELECT * FROM CART_PRD
+	    WHERE SEQ_SEL = #{seq_sel} AND SEQ_CRT = #{seq_crt}
+	</select>
+	
+	<update id="updateCartPrd" parameterType="CartDto">
+	    UPDATE CART_PRD
+	    SET CRT_COUNT = #{crt_count}
+	    WHERE SEQ_CRT_DTL = #{seq_crt_dtl}
+	</update>
+	
+	<delete id="deletePay">
+		DELETE
+			CART_PRD
+		WHERE
+			SEQ_SEL = #{seq_sel} AND SEQ_CRT = #{seq_crt}
+	</delete>
+	
+	
+	
+
+	<insert id="insertCartPrd" parameterType="CartDto">
+		INSERT INTO CART_PRD
+		(SEQ_CRT_DTL, SEQ_CRT, SEQ_SEL, SEQ_PRD, CRT_COUNT, CRT_PRICE, CRT_SEL_NM,
+		CRT_CORP_NM, CRT_CHECK, CRT_IMG, CRT_PATH)
+		VALUES
+		(#{seq_crt_dtl}, #{seq_crt}, #{seq_sel}, #{seq_prd}, #{crt_count}, #{crt_price}, #{crt_sel_nm},
+		#{crt_corp_nm}, 'A', #{crt_img}, #{crt_path})
+	</insert>
+
+	<select id="sequenceCartPrd" resultType="java.lang.Integer">
+		SELECT
+		SQ_SEQ_CRT_DTL.NEXTVAL FROM DUAL
+	</select>
+
+	<select id="select" parameterType="CartDto" resultType="CartDto">
+		SELECT A.SEQ_CRT, B.SEQ_SEL, B.SEQ_PRD, B.SEQ_CRT_DTL, B.CRT_COUNT, B.CRT_SEL_NM,
+		B.CRT_PRICE, B.CRT_CORP_NM, B.CRT_CHECK, B.CRT_IMG, B.CRT_PATH,
+		(B.CRT_COUNT * B.CRT_PRICE) AS TOTAL_PRICE
+		FROM 
+		CART A INNER JOIN CART_PRD B on A.SEQ_CRT = B.SEQ_CRT 
+		WHERE 
+		A.SEQ_CST = #{seq_cst}
+
+	</select>
+	
+	<update id="update" parameterType="CartDto">
+		UPDATE
+			CART_PRD
+		SET
+			CRT_COUNT = #{crt_count}
+		WHERE
+			SEQ_CRT_DTL = #{seq_crt_dtl}
+	</update>
+	
+	<delete id="delete">
+		DELETE
+			CART_PRD
+		WHERE
+			SEQ_CRT_DTL = #{seq_crt_dtl}
+	</delete>
+	
+	<select id="newSelect" parameterType="CartDto">
+		SELECT
+			CRT_COUNT, CRT_PRICE
+		FROM
+			CART_PRD
+		WHERE
+			SEQ_CRT_DTL = #{seq_crt_dtl}
+	</select>
+	
+	
+	<insert id="insertCart">
+		INSERT INTO CART
+		(SEQ_CRT, SEQ_CST)
+		VALUES
+		(#{seq_crt}, #{seq_cst})
+	</insert>
+	
+	<select id="sequenceCart" resultType="java.lang.Integer">
+		SELECT
+		SQ_SEQ_CRT.NEXTVAL FROM DUAL
+	</select>
+	
+	<select id="cartSelect">
+		SELECT
+			SEQ_CRT
+		FROM
+			CART
+		WHERE
+			SEQ_CST = #{seq_cst}
+	</select>
+
+</mapper>

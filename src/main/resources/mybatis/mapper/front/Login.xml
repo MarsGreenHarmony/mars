@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.front.login.mapper.CustomerLoginMapper">
+
+	<select id="loginProc" parameterType="java.lang.String" resultType="CustomerDto">
+		SELECT
+			SEQ_CST
+			, ID
+			, CST_NM
+			, PASSWD
+			, SEQ_STATE
+		FROM
+			CUSTOMER
+		WHERE
+			ID			= #{id}
+	</select>
+	
+	<select id="findPw" parameterType="java.lang.String" resultType="CustomerDto">							
+			SELECT				
+				SEQ_CST			
+			FROM				
+				CUSTOMER			
+			WHERE				
+				ID = #{id}
+			AND CST_NM = #{cst_nm}			
+			AND CST_EMAIL = #{cst_email}
+		
+	</select>
+	
+	<select id="findId" resultType="CustomerDto">
+    SELECT	
+    	ID
+   FROM	
+    	CUSTOMER
+   WHERE	
+  			 CST_NM = #{cst_nm}			
+			AND CST_EMAIL = #{cst_email}
+
+	</select>
+	
+	<update id="updatePw" parameterType="CustomerDto">
+		UPDATE
+			CUSTOMER
+		SET
+			PASSWD	= #{passwd}
+		WHERE
+			SEQ_CST = #{seq_cst}
+	</update>
+
+	
+	
+</mapper>

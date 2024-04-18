@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.front.review.mapper.ReviewMapper">
+	
+	
+	<select id="list" resultType="ReviewDto">
+		SELECT * FROM (
+        SELECT A.SEQ_REV, A.SEQ_PRD, A.SEQ_SEL, A.SEQ_DTL, A.DESCES, A.RATING, A.SEQ_CST
+        	, A.REV_IMG1, A.REV_IMG2, TO_CHAR(A.DT_REG, 'YYYY-MM-DD') DT_REG, B.PRD_IMG, B.PRD_PATH, A.PRD_NM,
+               ROW_NUMBER() OVER (ORDER BY A.DT_REG DESC) AS rnum
+        FROM REVIEW A
+        INNER JOIN PRD_IMG B
+        ON A.SEQ_PRD = B.SEQ_PRD
+        WHERE A.SEQ_REV > 0 AND A.SEQ_CST = #{seq_cst} AND B.TN_STATE = 'S'
+    )
+    WHERE rnum BETWEEN #{sno} AND #{eno}
+
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*)
+		from REVIEW
+		where ( SEQ_REV > 0) AND SEQ_CST = #{seq_cst}
+	</select>
+	
+	
+	
+	<select id="findReview" parameterType="ReviewDto" resultType="ReviewDto">
+	    SELECT * FROM REVIEW
+	    WHERE SEQ_SEL = #{seq_sel} AND SEQ_DTL = #{seq_dtl}
+	</select>
+
+
+	<insert id="insertReview" parameterType="ReviewDto">
+		INSERT INTO REVIEW
+		(SEQ_REV, SEQ_SEL, SEQ_CST, NAME, DESCES, RATING, DT_REG, REV_IMG1, REV_IMG2, SEQ_DTL, SEQ_PRD, PRD_NM)
+		VALUES
+		(#{seq_rev}, #{seq_sel}, #{seq_cst}, #{name}, #{desces}, #{rating}, SYSDATE, #{rev_img1}, #{rev_img2}, #{seq_dtl}, #{seq_prd}, #{prd_nm} )
+	</insert>
+
+
+	<select id="sequenceRev" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_REV.NEXTVAL
+		FROM DUAL
+	</select>
+
+	
+	<select id="searchList" resultType="ReviewDto">
+		SELECT * FROM (
+        SELECT SEQ_REV, SEQ_DTL, DESCES, RATING, SEQ_CST, NAME, REV_IMG1, REV_IMG2, TO_CHAR(DT_REG, 'YYYY-MM-DD') DT_REG,
+               ROW_NUMBER() OVER (ORDER BY DT_REG DESC) AS rnum
+        FROM REVIEW
+        WHERE SEQ_REV > 0 AND SEQ_SEL = #{seq_sel}
+        <include refid="search"></include>
+    )
+    WHERE rnum BETWEEN #{sno} AND #{eno}
+
+	</select>
+	
+	<select id="searchCount" resultType="int">
+		select count(*)
+		from REVIEW
+		where ( SEQ_REV > 0) AND SEQ_SEL = #{seq_sel}
+	</select>
+	
+	<sql id="search">
+		<!-- 키워드가 비어 있지 않은 경우 -->
+		<choose>
+			<when test="searchType == 'name'.toString()">
+				and sel_nm LIKE '%' || #{keyword} || '%'
+			</when>
+		</choose>
+	</sql>
+
+
+
+</mapper>

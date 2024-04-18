@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.backoffice.backofficeproduct.mapper.BackofficeProductMapper">
+	<select id="list" resultType="SaleDto">
+		SELECT
+   			A.SEQ_SEL,
+    		A.SEL_NM,
+    		A.PRICE,
+    		A.SEL_STATE,
+    		TO_CHAR(A.DT_REG, 'YYYY-MM-DD HH24:MI:SS') AS dt_reg,
+    		TO_CHAR(A.DT_UPT, 'YYYY-MM-DD HH24:MI:SS') AS dt_upt,
+    		B.CORP_NM
+		FROM
+    		SELL A
+		JOIN
+    		SELLER B ON A.REGISTER = B.SEQ_SLL
+    	ORDER BY A.SEQ_SEL DESC
+	</select>
+	
+	<select id="listing"  resultType="SaleDto">
+		SELECT
+			SEQ_SEL,	
+			SEL_NM,
+			PRICE,
+			SEL_STATE,
+			TO_CHAR(DT_REG, 'YYYY-MM-DD HH24:MI:SS') AS dt_reg,
+			TO_CHAR(DT_UPT, 'YYYY-MM-DD HH24:MI:SS') AS dt_upt
+		FROM
+			SELL
+		WHERE 
+			SEQ_SEL = #{seq_sel}
+	</select>
+	
+	<update id="update" parameterType="SaleDto">
+		UPDATE
+			SELL
+		SET
+			SEL_STATE = #{sel_state}	
+		WHERE
+			SEQ_SEL = #{seq_sel}
+	</update>
+</mapper>
+	

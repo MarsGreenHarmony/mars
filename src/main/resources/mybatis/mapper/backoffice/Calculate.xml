@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.backoffice.calculate.mapper.CalculateMapper">
+	<select id="list" resultType="BuyDtlDto">
+    SELECT
+    bd.SEQ_DTL,
+    bd.SEQ_MST,
+    bd.SEQ_PRD,
+    bd.SEQ_SEL,
+    bd.PRICE,
+    bd.COUNT,
+    bd.DT_REG,
+    bd.DETAIL_IMG,
+    bd.BUY_PRD_NM,
+    c.CST_NM,
+    CASE
+        WHEN bd.CD_STATE_CCL = 1 THEN '정산완료'
+        WHEN bd.CD_STATE_CCL = 2 THEN '정산전'
+        WHEN bd.CD_STATE_CCL = 3 THEN '정산거부'
+        ELSE bd.CD_STATE_CCL
+    END AS CD_STATE_CCL
+	FROM
+	    BUY_DTL bd
+	JOIN
+	    CUSTOMER c ON bd.REGISTER = c.SEQ_CST
+	ORDER BY
+	    bd.SEQ_DTL DESC
+</select>
+	
+	<select id="listing"  resultType="BuyDtlDto">
+		SELECT
+			SEQ_DTL,
+			SEQ_MST,
+			SEQ_PRD,
+			SEQ_SEL,
+			BUY_PRD_NM,
+			PRICE,
+			COUNT,
+			REGISTER,
+			CD_STATE_CCL
+		FROM
+			BUY_DTL
+		WHERE 
+			SEQ_DTL = #{seq_dtl}
+	</select>
+	
+	
+	<update id="update" parameterType="SaleDto">
+		UPDATE
+			BUY_DTL
+		SET
+			CD_STATE_CCL = #{cd_state_ccl}	
+		WHERE
+			SEQ_DTL = #{seq_dtl}
+	</update>
+</mapper>
+	

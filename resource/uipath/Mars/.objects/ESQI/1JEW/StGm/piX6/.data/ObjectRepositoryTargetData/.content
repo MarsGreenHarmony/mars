@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryTargetData ContentHash="Ne4_q06590y2TFoD9m_GLA" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryTargetData.Data>
+    <TargetAnchorable x:Key="TargetAnchorable" BrowserURL="http://mars.sn.himedia.co.kr:8082/seller/login/loginForm" CvElementArea="865, 422, 191, 25" CvType="InputBox" DesignTimeRectangle="866, 424, 188, 23" DesignTimeScaleFactor="1" ElementType="InputBox" FriendlyName="'rjsgh0850'" FullSelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl id='id' tableRow='1' tag='INPUT' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl id='id' type='text' tag='INPUT' class='' aaname='' /&gt;" Guid="15792496-b42d-48cd-b809-4c154bdf18c6" IsResponsive="True" ScopeSelectorArgument="&lt;html app='chrome.exe' title='mars.sn.himedia.co.kr:8082/seller/login/loginForm' /&gt;" SearchSteps="FuzzySelector, CV" Version="V2" Visibility="Interactive">
+      <TargetAnchorable.Anchors>
+        <scg:List x:TypeArguments="ITarget" Capacity="4">
+          <Target CvTextArea="791, 428, 37, 14" CvTextArgument="0p0IcI" CvType="Text" DesignTimeRectangle="792, 424, 74, 23" ElementType="Text" FriendlyName="'아이디'" FullSelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='LABEL' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl type='' tag='LABEL' class='' aaname='아이디' check:innerText='아이디' /&gt;" SearchSteps="FuzzySelector, CV" />
+        </scg:List>
+      </TargetAnchorable.Anchors>
+      <imageRef attrName="InformativeScreenshot" originalValue="3ce63363adb2f40672db8069f4607466.png" xmlns="">0TJPurUWVMk-pKUDGh2Fiuw</imageRef>
+    </TargetAnchorable>
+  </ObjectRepositoryTargetData.Data>
+</ObjectRepositoryTargetData>

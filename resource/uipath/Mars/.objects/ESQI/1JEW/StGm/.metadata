@@ -1,0 +1,13 @@
+﻿{
+  "Name": "Chrome: mars.sn.himedia.co.kr:8082/seller/main/main",
+  "Type": "Screen",
+  "Id": "StGm2_8VTkWsDffOjwn5JQ",
+  "Reference": "HydC3rRrRU2FaCfcQrqMKQ/StGm2_8VTkWsDffOjwn5JQ",
+  "ParentRef": "HydC3rRrRU2FaCfcQrqMKQ/1JEWM6R65UyFZf0jXQgJZg",
+  "Created": "2024-04-12T01:15:12.5718038Z",
+  "Updated": "2024-04-12T01:15:12.5718038Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=23.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=23.10.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

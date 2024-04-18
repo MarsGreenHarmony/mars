@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.front.like.mapper.LikeMapper">
+	
+	
+	<!-- <select id="findLikeItem" parameterType="LikeDto" resultType="LikeDto">
+	    SELECT * FROM CART_PRD
+	    WHERE SEQ_SEL = #{seq_sel} AND SEQ_CRT = #{seq_crt}
+	</select>
+	
+	<update id="updateCartPrd" parameterType="LikeDto">
+	    UPDATE CART_PRD
+	    SET CRT_COUNT = #{crt_count}
+	    WHERE SEQ_CRT_DTL = #{seq_crt_dtl}
+	</update>
+	
+	<delete id="deletePay">
+		DELETE
+			CART_PRD
+		WHERE
+			SEQ_SEL = #{seq_sel} AND SEQ_CRT = #{seq_crt}
+	</delete> -->
+	
+
+	<insert id="insert" parameterType="LikeDto">
+		INSERT INTO LIKEY
+		(SEQ_LKY, SEQ_CST, SEQ_SEL, SEQ_PRD, LKY_PRICE, LKY_SEL_NM,
+		LKY_CORP_NM, LKY_IMG, LKY_PATH, DT_REG)
+		VALUES
+		(#{seq_lky}, #{seq_cst}, #{seq_sel}, #{seq_prd}, #{lky_price}, #{lky_sel_nm},
+		#{lky_corp_nm}, #{lky_img}, #{lky_path}, SYSDATE)
+	</insert>
+	
+	<select id="sequence" resultType="java.lang.Integer">
+		SELECT
+		SQ_SEQ_LKY.NEXTVAL FROM DUAL
+	</select>
+	
+	<delete id="delete">
+	DELETE 
+	FROM
+	LIKEY 
+	WHERE 
+	SEQ_CST = #{seq_cst} AND SEQ_PRD = #{seq_prd} AND SEQ_SEL = #{seq_sel}
+	</delete>
+	
+	 <select id="getLikedProducts" parameterType="int" resultType="LikeDto">
+        SELECT SEQ_SEL, SEQ_PRD
+        FROM LIKEY
+        WHERE SEQ_CST = #{seq_cst}
+    </select>
+    
+    <select id="select" resultType="LikeDto" parameterType="LikeDto">
+    	SELECT SEQ_LKY, SEQ_CST, SEQ_PRD, SEQ_SEL, DT_REG, LKY_SEL_NM, LKY_CORP_NM, LKY_PRICE, LKY_IMG, LKY_PATH
+    	FROM LIKEY WHERE SEQ_CST = #{seq_cst}
+    </select>
+
+
+</mapper>

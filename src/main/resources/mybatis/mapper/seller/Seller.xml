@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.seller.sellers.mapper.SellerMapper">
+
+	<insert id="insert" parameterType="SellerDto">
+		INSERT INTO SELLER
+			(SEQ_SLL, ID, PASSWD, CORP_NUM, CORP_NM, CEO, CORP_POSTCODE, CORP_ADDR1, CORP_ADDR2, CORP_EMAIL, CORP_TEL, MNG_NM, MNG_PHONE, MNG_EMAIL, TC_STATE, DT_REG)
+		VALUES
+			(#{seq_sll}, #{id}, #{passwd}, #{corp_num}, #{corp_nm},#{ceo}, #{corp_postcode}, #{corp_addr1}, #{corp_addr2}, #{corp_email}, #{corp_tel}, #{mng_nm}, #{mng_phone}, #{mng_email}, #{tc_state}, SYSDATE )
+	</insert>
+	
+	<select id="sequence" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_SLL.NEXTVAL FROM DUAL
+	</select>
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT COUNT(id) FROM SELLER WHERE id= #{id}
+	</select>
+	
+	
+</mapper>

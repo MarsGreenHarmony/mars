@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryTargetData ContentHash="2q9mhZ3CH0SXa_lK8YB7Yw" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryTargetData.Data>
+    <TargetAnchorable x:Key="TargetAnchorable" BrowserURL="http://mars.sn.himedia.co.kr:8082/seller/main/main" DesignTimeRectangle="1136, 313, 174, 216" DesignTimeScaleFactor="1" ElementType="Text" FriendlyName="'상품입점 / 제휴 문의'" FullSelectorArgument="&lt;webctrl parentid='content' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='content' tag='A' type='' class='' aaname='상품입점 / 제휴 문의' check:text='상품입점 / 제휴 문의' /&gt;" Guid="86ae0448-adc8-43b8-8bb1-d8af5d0872ec" ScopeSelectorArgument="&lt;html app='chrome.exe' title='mars.sn.himedia.co.kr:8082/seller/main/main' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
+      <imageRef attrName="InformativeScreenshot" originalValue="5355e4551952e0f68252128c86f0bf12.png" xmlns="">0YQ8_Def_WE2azqCgyPwolA</imageRef>
+    </TargetAnchorable>
+  </ObjectRepositoryTargetData.Data>
+</ObjectRepositoryTargetData>

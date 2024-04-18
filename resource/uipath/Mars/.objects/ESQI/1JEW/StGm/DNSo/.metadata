@@ -1,0 +1,14 @@
+﻿{
+  "Name": "주문/배송 관리",
+  "Type": "Element",
+  "TaxonomyType": "Label",
+  "Id": "DNSoCWI8QEiTiyBYFL4piA",
+  "Reference": "HydC3rRrRU2FaCfcQrqMKQ/DNSoCWI8QEiTiyBYFL4piA",
+  "ParentRef": "HydC3rRrRU2FaCfcQrqMKQ/StGm2_8VTkWsDffOjwn5JQ",
+  "Created": "2024-04-12T01:16:54.0365177Z",
+  "Updated": "2024-04-12T01:16:54.0365177Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=23.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=23.10.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

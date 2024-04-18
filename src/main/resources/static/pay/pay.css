@@ -1,0 +1,343 @@
+.order_zone_tit{
+    margin:0 0 0 0;
+    padding:0 0 10px 0;
+    font-size:16px;
+}
+#contents .order_table_type {
+    position: relative;
+}
+.order_table_type table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.order_table_type .table_left {
+    border-top: 1px solid #999999;
+}
+
+colgroup {
+    display: table-column-group;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+col {
+    display: table-column;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.order_cont .table_left th {
+    padding: 15px 10px 14px 30px;
+}
+.order_table_type .table_left th {
+    border-top: none 0;
+    background: #f7f7f7;
+    text-align: left;
+}
+th > .important {
+    margin: 0 0 0 -10px;
+    padding: 0 0 0 10px;
+}
+.order_table_type .table_left td {
+    height: 31px;
+    padding: 12px 10px 11px 15px;
+    text-align: left;
+}
+.order_table_type td {
+    color:#777777;
+    border-bottom:1px solid #dbdbdb;
+    background: #ffffff;
+}
+.order_cont input[type="text"] {
+    width: 220px;
+}
+input[type="text"] {
+    padding: 5px;
+    width: 200px;
+    outline: none;
+    font-size: 12px;
+}
+.order_cont .member_email select {
+    width: 120px;
+}
+option {
+    font-weight: normal;
+    display: block;
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
+    white-space: nowrap;
+}
+#wrap .chosen-container {
+    vertical-align: top;
+    text-align: left;
+}
+.chosen-container {
+    position: relative;
+    display: inline-block;
+    font-size: 13px;
+    user-select: none;
+}
+#wrap .chosen-single {
+    height: 31px;
+    color: #717171;
+    vertical-align: top;
+    outline: none;
+    border: 1px solid #cccccc;
+}
+#wrap .chosen-single > span {
+    line-height: 30px;
+}
+.chosen-container-single .chosen-single span {
+    display: block;
+    overflow: hidden;
+    margin-right: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#wrap .chosen-single > span {
+    line-height: 30px;
+}
+.chosen-container-single .chosen-single span {
+    display: block;
+    overflow: hidden;
+    margin-right: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.chosen-container-single .chosen-single div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 18px;
+    height: 100%;
+}
+.chosen-container-single .chosen-single div b {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url(chosen-sprite.png) no-repeat 0px 2px;
+}
+#wrap .chosen-container .chosen-drop {
+    border: 1px solid #cccccc;
+    border-top: none 0;
+}
+.chosen-container-single .chosen-drop {
+    margin-top: -1px;
+    border-radius: 0 0 4px 4px;
+    background-clip: padding-box;
+}
+.chosen-container .chosen-drop {
+    position: absolute;
+    top: 100%;
+    left: -9999px;
+    z-index: 1010;
+    width: 100%;
+    background:#fff;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+}
+.chosen-container-single.chosen-container-single-nosearch .chosen-search{
+    position:absolute;
+    left: -9999px
+}
+.chosen-container-single .chosen-search {
+    z-index: 1010;
+    margin: 0;
+    padding: 3px 4px;
+    white-space: nowrap;
+}
+.chosen-container-single .chosen-search input[type="text"] {
+    margin: 1px 0;
+    padding: 4px 20px 4px 5px;
+    width: 100%;
+    height: auto;
+    outline: 0;
+    border: 1px solid #aaa;
+    background: url(chosen-sprite.png) no-repeat 100% -20px;
+    font-size: 1em;
+    font-family: sans-serif;
+    line-height: normal;
+    border-radius: 0;
+}
+
+.chosen-container .chosen-results {
+    color: #444;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0 4px 4px 0;
+    padding: 0 0 0 4px;
+    max-height: 240px;
+}
+/*배송 정보*/
+.order_zone_tit {
+    margin: 0 0 0 0;
+    padding: 0 0 10px 0;
+    font-size: 16px;
+}
+.order_view_info h4 {
+    margin: 50px 0 0 0;
+}
+.order_zone_tit h4 {
+    font-size: 16px;
+}
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+#contents .order_table_type {
+    position: relative;
+}
+div {
+    display: block;
+}
+body {
+    font-size: 15px;
+    color: #6d6e71;
+}
+.order_table_type .table_left {
+    border-top: 1px solid #999999;
+}
+
+.order_table_type table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    text-align: center;
+}
+table {
+    display: table;
+    box-sizing: border-box;
+    text-indent: initial;
+}
+colgroup {
+    display: table-column-group;
+}
+col {
+    display: table-column;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.order_cont .table_left th {
+    padding: 15px 10px 14px 30px;
+}
+.order_table_type .table_left th {
+    border-top: none 0;
+    background: #f7f7f7;
+    text-align: left;
+}
+.order_table_type .table_left td {
+    height: 31px;
+    padding: 12px 10px 11px 15px;
+    text-align: left;
+}
+.form_element {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+th > .important {
+    margin: 0 0 0 -10px;
+    padding: 0 0 0 10px;
+    background: url(../../img/member/icon_dot_03.png) no-repeat 0 center;
+}
+.order_cont input[type="text"] {
+    width: 220px;
+}
+#contents .member_address .address_postcode {
+    overflow: hidden;
+    position: relative;
+}
+#contents .member_address .address_postcode input {
+    float: left;
+}
+#contents .member_address .address_postcode .btn_post_search {
+    float: left;
+    margin: 0 0 0 5px;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid #989898;
+}
+#contents .member_address .address_input {
+    float: left;
+    width: 98%;
+}
+#contents .member_address .address_input input:first-child {
+    width: 400px;
+}
+#contents .member_address .address_input input {
+    width: 250px;
+    margin: 10px 0 0 0;
+}
+.order_table_type .table_left td {
+    height: 31px;
+    padding: 12px 10px 11px 15px;
+    text-align: left;
+}
+.td_last_say input[type="text"] {
+    width: 90%;
+}
+.order_table_type th {
+    padding: 9px 10px 10px 10px;
+    border-top: 1px solid #999999;
+    border-bottom: 1px solid #dbdbdb;
+    background: #f7f7f7;
+}
+.select {
+    background: #fff;
+}
+select.selH28 {
+    height: 28px;
+    padding: 0 0 0 5px;
+    font-size: 12px;
+    border-color: #ccc;
+}
+option {
+    font-weight: normal;
+    display: block;
+    min-height: 1.2em;
+    white-space: nowrap;
+}
+
+.sub_content{
+    padding:260px 0 0;
+    margin-left:27%;
+}
+.btn_center_box button{
+    margin-top:50px;
+}
+.order_table_type td{
+    border-left: 1px solid #dbdbdb;
+}
+.order_table_type .td_delivery{
+    border-right:1px solid #dbdbdb;
+}
+.order_table_type th{
+    border-left: 1px solid #dbdbdb;
+}
+.order_table_type th{
+    border-right:1px solid #dbdbdb;
+}
+.order_table_type {
+    margin-left:50px;
+}

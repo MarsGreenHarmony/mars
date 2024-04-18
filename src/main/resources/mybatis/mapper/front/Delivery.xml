@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.front.delivery.mapper.DeliveryMapper">
+
+	<select id="select" resultType="DeliveryDto" parameterType="DeliveryDto">
+		SELECT 
+		    SEQ_CST, SEQ_DEV, DEV_NM, DEV_HM, ADDRESS, ADDRESS_DTL, PHONE_NM, POSTCODE, DEV_STATE
+		FROM 
+		    DELIVERY 
+		WHERE
+			SEQ_DEV = #{seq_dev}
+ 
+	</select>
+	 
+	 <select id="sequence" resultType="java.lang.Integer">
+		SELECT SQ_SEQ_DEV.NEXTVAL FROM DUAL
+	</select>
+	
+	<select id="list" resultType="DeliveryDto" parameterType="DeliveryDto">
+		SELECT
+			SEQ_CST,SEQ_DEV,DEV_NM, DEV_HM, ADDRESS, ADDRESS_DTL, PHONE_NM, POSTCODE,DEV_STATE
+		FROM
+		  	DELIVERY
+				
+		WHERE
+			SEQ_CST = #{seq_cst}
+		
+	</select>
+	
+	<insert id="insert" parameterType="DeliveryDto">
+		INSERT INTO DELIVERY
+			(SEQ_CST, SEQ_DEV, DEV_NM, DEV_HM, POSTCODE, ADDRESS, ADDRESS_DTL,PHONE_NM, DEV_STATE)
+		VALUES
+			(#{seq_cst}, #{seq_dev}, #{dev_nm}, #{dev_hm}, #{postcode}, #{address}, #{address_dtl}, #{phone_nm}, #{dev_state})
+	</insert>
+	
+	<update id="update" parameterType="DeliveryDto">
+		UPDATE
+			DELIVERY
+		SET
+			DEV_NM          = #{dev_nm}
+			, DEV_HM		= #{dev_hm}
+			, POSTCODE		= #{postcode}
+			, ADDRESS		= #{address}
+			, ADDRESS_DTL	= #{address_dtl}
+			, PHONE_NM		= #{phone_nm}
+			<if test="dev_state != before_dev_state">
+			,DEV_STATE      = #{dev_state}
+			</if>   
+		WHERE
+			SEQ_DEV = #{seq_dev}
+	</update>
+	
+	<delete id="delete"  parameterType="DeliveryDto">
+		  DELETE FROM DELIVERY
+		  WHERE SEQ_DEV = #{seq_dev}
+	</delete>
+	
+	<update id="updateDev" parameterType="DeliveryDto">
+		UPDATE 
+			DELIVERY SET DEV_STATE = 'N'
+	    WHERE 
+	    	SEQ_DEV = #{seq_dev} 
+	
+	</update>
+	
+	<select id="selectDev" parameterType="DeliveryDto">
+		SELECT
+         dev_state,seq_dev
+   	 FROM 
+   	 	delivery
+    WHERE 
+    	seq_cst = #{seq_cst} and dev_state='Y'
+	</select>
+	
+	<select id="selectpay" parameterType="DeliveryDto">
+	
+	SELECT
+	  DEV_NM,DEV_HM, POSTCODE, ADDRESS,ADDRESS_DTL,PHONE_NM
+	 FROM 
+	 	DELIVERY
+	WHERE 	
+		SEQ_CST =#{seq_cst} AND DEV_STATE='Y'
+	
+	</select>
+	
+	
+	
+	</mapper>
+	

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.himedia.sn.ecommerce5th.mars.greenharmony.common.board.mapper.BoardMapper">
+	
+	<select id="sequence" resultType="java.lang.Integer">
+		SELECT 
+			SQ_SEQ_BBS.NEXTVAL
+		FROM 
+			DUAL
+	</select>
+	
+	<insert id="insert" parameterType="BoardDto">
+		INSERT INTO BOARD
+			(SEQ_BBS, SEQ_BBS_PARENT, CD_BBS_TYPE, FLG_DELETE, TITLE, CONTENTS, DT_REG, REGISTER, CD_USR_TYPE)
+		VALUES
+			(#{seq_bbs}, #{seq_bbs_parent},#{cd_bbs_type}, 'N', #{title}, #{contents}, SYSDATE, #{register},  #{cd_usr_type})
+	</insert>		
+	
+	<select id="select" resultType="BoardDto">
+		SELECT
+			TITLE
+			, SEQ_BBS
+			, CONTENTS
+			, DT_REG
+			, REGISTER 
+			, DT_UPT
+		FROM 
+			BOARD
+		WHERE	
+			SEQ_BBS = #{seq_bbs}
+		ORDER BY DT_REG DESC
+	</select>
+	
+	<select id="list" resultType="BoardDto">
+		SELECT
+			TITLE
+			, CONTENTS
+			, SEQ_BBS
+			, DT_REG
+			<!-- , REGISTER  -->
+		FROM 
+			BOARD
+			WHERE
+			FLG_DELETE = 'N' AND CD_BBS_TYPE = #{cd_bbs_type}
+		ORDER BY DT_REG DESC
+	</select>
+	
+	<select id="faqlist" resultType="BoardDto">
+		SELECT
+			TITLE
+			<!-- , RNUM -->
+			, CONTENTS
+			, SEQ_BBS
+			, DT_REG
+		FROM 
+			BOARD
+			WHERE
+			FLG_DELETE = 'N' AND CD_BBS_TYPE = #{cd_bbs_type}
+		ORDER BY DT_REG DESC
+	</select>
+	
+	<update id="update" parameterType="BoardDto">
+		UPDATE
+			BOARD
+		SET
+			TITLE		= #{title}
+			, CONTENTS	= #{contents}
+			, UPDATER	= 1
+		WHERE
+			SEQ_BBS = #{seq_bbs}
+	</update>
+	
+		
+	<update id="flg_delete" parameterType="boardDto">
+		UPDATE
+			BOARD
+		SET
+			FLG_DELETE 	= 'Y'
+			, DT_UPT	= SYSDATE
+		WHERE
+			SEQ_BBS = #{seq_bbs}
+	</update>
+	
+	<select id="cstlist" resultType="BoardDto">
+			SELECT
+		        B.TITLE,
+		        B.CONTENTS,
+		        B.SEQ_BBS,
+		    (
+            SELECT bbs_self.SEQ_BBS 
+            FROM board bbs_self 
+            WHERE bbs_self.seq_bbs_parent = B.SEQ_BBS
+        	) AS seq_reply,
+        B.DT_REG
+		       
+		    FROM
+		        BOARD B
+		    INNER JOIN
+		        CUSTOMER C ON B.REGISTER = C.SEQ_CST
+		    WHERE
+		        B.FLG_DELETE = 'N'
+		        AND B.CD_BBS_TYPE = #{cd_bbs_type}
+        		AND B.REGISTER = #{register}
+        		AND B.CD_USR_TYPE = #{cd_usr_type}
+        	ORDER BY B.DT_REG DESC
+	</select>
+	<select id="inquiryList" resultType="BoardDto">
+	SELECT
+        B.TITLE,
+        B.CONTENTS,
+        B.SEQ_BBS,
+        (
+            SELECT bbs_self.SEQ_BBS 
+            FROM board bbs_self 
+            WHERE bbs_self.seq_bbs_parent = B.SEQ_BBS
+        ) AS seq_reply,
+        B.DT_REG
+    FROM
+        BOARD B
+    INNER JOIN
+        CUSTOMER C ON B.REGISTER = C.SEQ_CST
+    WHERE
+        B.FLG_DELETE = 'N'
+        AND B.CD_BBS_TYPE = #{cd_bbs_type}
+        ORDER BY B.DT_REG DESC
+    
+			</select>
+			
+	<select id="myinquiryList" resultType="BoardDto">
+			
+			SELECT
+		    B.TITLE,
+		    B.SEQ_BBS,
+		    B.CONTENTS,
+		    B.DT_REG,
+		    B.REGISTER,
+		    (
+		        SELECT bbs_self.CONTENTS 
+		        FROM board bbs_self 
+		        WHERE bbs_self.seq_bbs_parent = B.SEQ_BBS
+		    ) AS contents_reply
+		FROM 
+		    BOARD B
+		WHERE    
+		    B.SEQ_BBS = ${seq_bbs}
+		 ORDER BY B.DT_REG DESC
+	</select>
+	
+</mapper>
+	

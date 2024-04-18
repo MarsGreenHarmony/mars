@@ -1,0 +1,14 @@
+﻿{
+  "Name": "로그인",
+  "Type": "Element",
+  "TaxonomyType": "Label",
+  "Id": "slHyyBg8eUqMKnx-GRkbYQ",
+  "Reference": "HydC3rRrRU2FaCfcQrqMKQ/slHyyBg8eUqMKnx-GRkbYQ",
+  "ParentRef": "HydC3rRrRU2FaCfcQrqMKQ/StGm2_8VTkWsDffOjwn5JQ",
+  "Created": "2024-04-12T01:15:56.7419711Z",
+  "Updated": "2024-04-12T01:15:56.7419711Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=23.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=23.10.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

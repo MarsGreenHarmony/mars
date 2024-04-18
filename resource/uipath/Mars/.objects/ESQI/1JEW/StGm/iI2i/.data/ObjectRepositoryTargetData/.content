@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryTargetData ContentHash="p2NIO2y3V0i2ro2Wti_pHw" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryTargetData.Data>
+    <TargetAnchorable x:Key="TargetAnchorable" BrowserURL="http://mars.sn.himedia.co.kr:8082/seller/main/main" CvElementArea="1360, 133, 110, 28" CvTextArea="1369, 140, 33, 13" CvTextArgument="FI9I" CvType="Button" DesignTimeRectangle="1370, 140, 40, 14" DesignTimeScaleFactor="1" ElementType="Text" FriendlyName="'로그인   '" FullSelectorArgument="&lt;webctrl aaname='로그인   |' parentid='header_son' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='로그인   |' parentid='header_son' tag='A' type='' class='' check:innerText='로그인   |' /&gt;" Guid="61e3e7d7-0014-47a2-848c-96311d332463" ScopeSelectorArgument="&lt;html app='chrome.exe' title='mars.sn.himedia.co.kr:8082/seller/main/main' /&gt;" SearchSteps="FuzzySelector, CV" Version="V2" Visibility="Interactive">
+      <imageRef attrName="InformativeScreenshot" originalValue="3a7c195af18a1121138781eb79142a8c.png" xmlns="">0-GeIUWmoiEeEBBjSRHAFng</imageRef>
+    </TargetAnchorable>
+  </ObjectRepositoryTargetData.Data>
+</ObjectRepositoryTargetData>

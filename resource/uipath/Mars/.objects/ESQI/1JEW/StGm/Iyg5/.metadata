@@ -1,0 +1,14 @@
+﻿{
+  "Name": "확인",
+  "Type": "Element",
+  "TaxonomyType": "Button",
+  "Id": "Iyg5jE54UUaSdGj7dkPAkA",
+  "Reference": "HydC3rRrRU2FaCfcQrqMKQ/Iyg5jE54UUaSdGj7dkPAkA",
+  "ParentRef": "HydC3rRrRU2FaCfcQrqMKQ/StGm2_8VTkWsDffOjwn5JQ",
+  "Created": "2024-04-12T01:16:01.8416738Z",
+  "Updated": "2024-04-12T01:16:01.8416738Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=23.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=23.10.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

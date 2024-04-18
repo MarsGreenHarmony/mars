@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryTargetData ContentHash="M7BawpoQlEu0l8pflNljEQ" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryTargetData.Data>
+    <TargetAnchorable x:Key="TargetAnchorable" BrowserURL="http://mars.sn.himedia.co.kr:8082/seller/login/loginForm" CvElementArea="208, 361, 22, 22" CvType="ArrowButton" DesignTimeRectangle="210, 363, 18, 18" DesignTimeScaleFactor="1" FriendlyName="'I'" FullSelectorArgument="&lt;webctrl class='menu-arrow' idx='2' tag='I' /&gt;" FuzzySelectorArgument="&lt;webctrl class='menu-arrow' type='' tag='I' aaname='' /&gt;" Guid="01bf7f64-b01e-4ba7-9740-d7c8066cb6d3" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Connect Plus' /&gt;" SearchSteps="FuzzySelector, CV" Version="V2" Visibility="Interactive">
+      <TargetAnchorable.Anchors>
+        <scg:List x:TypeArguments="ITarget" Capacity="4">
+          <Target CvTextArea="83, 362, 65, 17" CvTextArgument="7Z/HH#" CvType="Text" DesignTimeRectangle="84, 365, 64, 15" ElementType="Text" FriendlyName="'주문/배송'" FullSelectorArgument="&lt;webctrl aaname='주문/배송' class='menu-title' parentid='sidebar' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='주문/배송' class='menu-title' parentid='sidebar' tag='SPAN' type='' check:innerText='주문/배송' /&gt;" SearchSteps="FuzzySelector, CV" />
+        </scg:List>
+      </TargetAnchorable.Anchors>
+      <imageRef attrName="InformativeScreenshot" originalValue="0845e0e06b2b659730495f3371d18295.png" xmlns="">0RGMgBF6uBEabPVXlAbwpfw</imageRef>
+    </TargetAnchorable>
+  </ObjectRepositoryTargetData.Data>
+</ObjectRepositoryTargetData>
